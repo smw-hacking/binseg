@@ -1,0 +1,9 @@
+[package]
+name = "binseg"
+description = "A library for segmenting binary files. This can be useful in many cases like disecting game rom files or old firmware packages."
+version = "0.1.0"
+authors = ["Julian Laubstein <contact@julianlaubstein.de>"]
+edition = "2018"
+
+[dependencies]
+crypto-hash = "^0.3"
