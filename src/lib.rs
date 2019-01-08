@@ -65,7 +65,7 @@ macro_rules! segment_binary {
         }
 
         impl $bin_ident {
-            #[doc = "Creates a new segmentation for the binary with the hash `"]
+            #[doc = "Creates a new segmentation for the binary with the sha256 hash `"]
             #[doc = $hash_string]
             #[doc = "`"]
             pub fn from_file<P: AsRef<std::path::Path>>(path: P) -> std::io::Result<$bin_ident> {
@@ -78,6 +78,7 @@ macro_rules! segment_binary {
                 file.read_to_end(&mut bin_data)?;
 
                 let given_hash = String::from($hash_string);
+
                 let actual_file_hash = hex_digest(Algorithm::SHA256, &bin_data);
 
                 assert_eq!(actual_file_hash, given_hash, "incorrect file");
