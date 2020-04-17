@@ -53,7 +53,7 @@ pub use crypto_hash;
 #[macro_export]
 macro_rules! segment_binary {
     (
-        pub $bin_ident:ident ( $hash_string:expr ) {
+        pub $bin_ident:ident ( $hash_string:literal ) {
             $(
                 $(#[$meta_attr:meta])*
                 $seg_ident:ident : $mem_range:expr
@@ -69,13 +69,10 @@ macro_rules! segment_binary {
             #[doc = $hash_string]
             #[doc = "`"]
             pub fn from_file<P: AsRef<std::path::Path>>(path: P) -> std::io::Result<$bin_ident> {
-                use std::{io::Read, fs::File};
+                use std::{io::Read, fs};
                 use $crate::crypto_hash::{Algorithm, hex_digest};
 
-                let mut file = File::open(path)?;
-                let mut bin_data = Vec::new();
-
-                file.read_to_end(&mut bin_data)?;
+                let bin_data = fs::read(path)?;
 
                 let given_hash = String::from($hash_string);
 
